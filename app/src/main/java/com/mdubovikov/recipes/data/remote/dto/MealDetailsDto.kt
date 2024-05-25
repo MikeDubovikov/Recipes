@@ -2,7 +2,7 @@ package com.mdubovikov.recipes.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class MealDetailDto(
+data class MealDetailsDto(
     @SerializedName("idMeal")
     val id: String,
     @SerializedName("strArea")

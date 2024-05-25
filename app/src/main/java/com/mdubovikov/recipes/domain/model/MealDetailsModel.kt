@@ -1,6 +1,6 @@
 package com.mdubovikov.recipes.domain.model
 
-data class MealDetailModel(
+data class MealDetailsModel(
     val id: String,
     val area: String,
     val name: String,
