@@ -2,6 +2,8 @@ package com.mdubovikov.recipes.common
 
 object Constants {
 
+    const val DATABASE_NAME = "meal.db"
+
     const val BASE_URL = "https://www.themealdb.com/api/json/v1/1/"
 
     object Endpoints {
