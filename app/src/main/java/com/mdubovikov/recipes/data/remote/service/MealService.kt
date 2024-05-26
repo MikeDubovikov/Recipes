@@ -22,7 +22,7 @@ interface MealService {
     suspend fun getMealDetails(@Query(MEAL_DETAILS_QUERY) id: Int): MealDetailsResponse
 
     @GET(SEARCH_MEALS)
-    suspend fun searchMeal(@Query(SEARCH_QUERY) query: String): MealResponse
+    suspend fun searchMeals(@Query(SEARCH_QUERY) query: String): MealResponse
 
     @GET(CATEGORIES)
     suspend fun getCategories(): CategoryResponse
