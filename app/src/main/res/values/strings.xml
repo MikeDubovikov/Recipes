@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Recipes</string>
+    <string name="title_home">Home</string>
+    <string name="title_saved">Saved</string>
+    <string name="title_details">Details</string>
+    <string name="title_settings">Settings</string>
 </resources>

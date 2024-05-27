@@ -2,4 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="eerie_black2">#1F1F1F</color>
+    <color name="eerie_black">#292929</color>
+    <color name="grey">#808080</color>
+    <color name="middle_grey">#3D3D3D</color>
+    <color name="light_grey">#F5F5F5</color>
+    <color name="green">#008000</color>
+    <color name="orange">#F3712B</color>
+    <color name="light_orange">#FEF2EC</color>
+    <color name="brown">#655F58</color>
+    <color name="black_reverse">#FF000000</color>
 </resources>
