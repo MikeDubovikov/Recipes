@@ -36,12 +36,28 @@ class MealRepositoryImpl @Inject constructor(
         return mapper.mapListMealDtoToListMealModel(remote.getMeals(category).meals)
     }
 
+    override suspend fun getRandomMeals(): List<MealModel> {
+        return mapper.mapListMealDtoToListMealModel(remote.getRandomMeals().meals)
+    }
+
     override suspend fun getMealDetails(mealId: Int): MealDetailsModel {
         return mapper.mapMealDetailsDtoToMealDetailsModel(remote.getMealDetails(mealId).meals[0])
     }
 
-    override suspend fun searchMeals(query: String): List<MealModel> {
-        return mapper.mapListMealDtoToListMealModel(remote.searchMeals(query).meals)
+    override suspend fun searchMealsByName(query: String): List<MealModel> {
+        return mapper.mapListMealDtoToListMealModel(remote.searchMealsByName(query).meals)
+    }
+
+    override suspend fun searchMealsByArea(query: String): List<MealModel> {
+        return mapper.mapListMealDtoToListMealModel(remote.searchMealsByArea(query).meals)
+    }
+
+    override suspend fun searchMealsByFirstLetter(query: String): List<MealModel> {
+        return mapper.mapListMealDtoToListMealModel(remote.searchMealsByFirstLetter(query).meals)
+    }
+
+    override suspend fun searchMealsByIngredient(query: String): List<MealModel> {
+        return mapper.mapListMealDtoToListMealModel(remote.searchMealsByIngredient(query).meals)
     }
 
     override suspend fun getCategories(): List<CategoryModel> {

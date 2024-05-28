@@ -19,14 +19,34 @@ class RemoteDataSource @Inject constructor(
             mealService.getMeals(category)
         }
 
+    override suspend fun getRandomMeals(): MealResponse =
+        withContext(ioDispatcher) {
+            mealService.getRandomMeals()
+        }
+
     override suspend fun getMealDetails(mealId: Int): MealDetailsResponse =
         withContext(ioDispatcher) {
             mealService.getMealDetails(mealId)
         }
 
-    override suspend fun searchMeals(query: String): MealResponse =
+    override suspend fun searchMealsByName(query: String): MealResponse =
         withContext(ioDispatcher) {
-            mealService.searchMeals(query)
+            mealService.searchMealsByName(query)
+        }
+
+    override suspend fun searchMealsByArea(query: String): MealResponse =
+        withContext(ioDispatcher) {
+            mealService.searchMealsByArea(query)
+        }
+
+    override suspend fun searchMealsByFirstLetter(query: String): MealResponse =
+        withContext(ioDispatcher) {
+            mealService.searchMealsByFirstLetter(query)
+        }
+
+    override suspend fun searchMealsByIngredient(query: String): MealResponse =
+        withContext(ioDispatcher) {
+            mealService.searchMealsByIngredient(query)
         }
 
     override suspend fun getCategories(): CategoryResponse =

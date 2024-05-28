@@ -18,9 +18,17 @@ interface MealRepository {
 
     suspend fun getMeals(category: String): List<MealModel>
 
+    suspend fun getRandomMeals(): List<MealModel>
+
     suspend fun getMealDetails(mealId: Int): MealDetailsModel
 
-    suspend fun searchMeals(query: String): List<MealModel>
+    suspend fun searchMealsByName(query: String): List<MealModel>
+
+    suspend fun searchMealsByArea(query: String): List<MealModel>
+
+    suspend fun searchMealsByFirstLetter(query: String): List<MealModel>
+
+    suspend fun searchMealsByIngredient(query: String): List<MealModel>
 
     suspend fun getCategories(): List<CategoryModel>
 }

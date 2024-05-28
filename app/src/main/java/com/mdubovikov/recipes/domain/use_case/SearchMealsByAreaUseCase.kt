@@ -9,13 +9,13 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class SearchMealsUseCase @Inject constructor(
+class SearchMealsByAreaUseCase @Inject constructor(
     private val mealRepository: MealRepository
 ) {
     operator fun invoke(query: String): Flow<Result<List<MealModel>>> = flow {
         try {
             emit(Result.Loading)
-            val searchedMeals = mealRepository.searchMeals(query = query)
+            val searchedMeals = mealRepository.searchMealsByArea(query = query)
             emit(Result.Success(data = searchedMeals))
         } catch (e: IOException) {
             emit(Result.Error(error = e.message))

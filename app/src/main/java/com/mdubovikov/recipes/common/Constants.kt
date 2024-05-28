@@ -11,11 +11,21 @@ object Constants {
         const val MEAL_DETAILS = "lookup.php"
         const val SEARCH_MEALS = "search.php"
         const val MEALS = "filter.php"
+        const val RANDOM_MEAL = "random.php"
     }
 
-    object Queries{
+    object Queries {
+        const val CATEGORY = "CATEGORY"
+        const val RANDOM = "RANDOM"
+        const val SEARCH_BY_NAME = "SEARCH_BY_NAME"
+        const val SEARCH_BY_FIRST_LETTER = "SEARCH_BY_FIRST_LETTER"
+        const val SEARCH_BY_INGREDIENT = "SEARCH_BY_INGREDIENT"
+        const val SEARCH_BY_AREA = "SEARCH_BY_AREA"
         const val MEALS_QUERY = "c"
         const val MEAL_DETAILS_QUERY = "i"
-        const val SEARCH_QUERY = "s"
+        const val SEARCH_BY_NAME_QUERY = "s"
+        const val SEARCH_BY_FIRST_LETTER_QUERY = "f"
+        const val SEARCH_BY_INGREDIENT_QUERY = "i"
+        const val SEARCH_BY_AREA_QUERY = "a"
     }
 }
