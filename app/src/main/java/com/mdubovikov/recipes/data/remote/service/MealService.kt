@@ -29,16 +29,16 @@ interface MealService {
     suspend fun getMealDetails(@Query(MEAL_DETAILS_QUERY) id: Int): MealDetailsResponse
 
     @GET(SEARCH_MEALS)
-    suspend fun searchMealsByName(@Query(SEARCH_BY_NAME_QUERY) query: String): MealResponse
-
-    @GET(SEARCH_MEALS)
-    suspend fun searchMealsByFirstLetter(@Query(SEARCH_BY_FIRST_LETTER_QUERY) query: String): MealResponse
-
-    @GET(MEALS)
-    suspend fun searchMealsByIngredient(@Query(SEARCH_BY_INGREDIENT_QUERY) ingredient: String): MealResponse
+    suspend fun searchMealsByName(@Query(SEARCH_BY_NAME_QUERY) name: String): MealResponse
 
     @GET(MEALS)
     suspend fun searchMealsByArea(@Query(SEARCH_BY_AREA_QUERY) area: String): MealResponse
+
+    @GET(SEARCH_MEALS)
+    suspend fun searchMealsByFirstLetter(@Query(SEARCH_BY_FIRST_LETTER_QUERY) firstLetter: String): MealResponse
+
+    @GET(MEALS)
+    suspend fun searchMealsByIngredient(@Query(SEARCH_BY_INGREDIENT_QUERY) ingredient: String): MealResponse
 
     @GET(CATEGORIES)
     suspend fun getCategories(): CategoryResponse

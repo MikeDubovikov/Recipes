@@ -15,7 +15,7 @@ class SearchMealsByIngredientUseCase @Inject constructor(
     operator fun invoke(query: String): Flow<Result<List<MealModel>>> = flow {
         try {
             emit(Result.Loading)
-            val searchedMeals = mealRepository.searchMealsByArea(query = query)
+            val searchedMeals = mealRepository.searchMealsByIngredient(query = query)
             emit(Result.Success(data = searchedMeals))
         } catch (e: IOException) {
             emit(Result.Error(error = e.message))
