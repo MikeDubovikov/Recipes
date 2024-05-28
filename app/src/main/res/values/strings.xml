@@ -5,4 +5,20 @@
     <string name="title_details">Details</string>
     <string name="title_settings">Settings</string>
     <string name="save">Save</string>
+    <string name="meals">Meals</string>
+    <string name="categories">Categories</string>
+    <string name="error">Error!</string>
+    <string name="search_meals">Search…</string>
+    <string name="search">Search</string>
+    <string name="choose_search">Choose category of search</string>
+    <string name="meals_not_found">Meals not found</string>
+    <string name="button_custom_search">Button custom search</string>
+
+    <string-array name="searches">
+        <item>Search by name</item>
+        <item>Search by first letter</item>
+        <item>Search by area</item>
+        <item>Search by ingredient</item>
+    </string-array>
+
 </resources>

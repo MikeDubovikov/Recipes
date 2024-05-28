@@ -6,6 +6,9 @@ object Constants {
 
     const val BASE_URL = "https://www.themealdb.com/api/json/v1/1/"
 
+    const val SELECTED_SEARCH = "SELECTED_SEARCH"
+    const val SELECTED_CATEGORY = "SELECTED_CATEGORY"
+
     object Endpoints {
         const val CATEGORIES = "categories.php"
         const val MEAL_DETAILS = "lookup.php"
