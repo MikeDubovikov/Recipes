@@ -52,5 +52,9 @@
         <item name="android:backgroundTint">@color/light_orange</item>
     </style>
 
+    <style name="ErrorBackgroundDetails">
+        <item name="android:backgroundTint">@color/light_grey</item>
+    </style>
+
     <style name="Theme.Recipes" parent="Base.Theme.Recipes" />
 </resources>

@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel @Inject constructor(
+class DetailsViewModel @Inject constructor(
     private val getMealDetailsUseCase: GetMealDetailsUseCase,
     private val addOrRemoveMealUseCase: AddOrRemoveMealUseCase,
     private val isMealInSavedUseCase: IsMealInSavedUseCase,

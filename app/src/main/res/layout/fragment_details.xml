@@ -1,6 +1,556 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <variable
+            name="mealDetails"
+            type="com.mdubovikov.recipes.domain.model.MealDetailsModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/meal_details">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/ScreenBackground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvMealDetailImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                app:cardCornerRadius="175dp"
+                app:cardElevation="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivMealDetails"
+                    android:layout_width="350dp"
+                    android:layout_height="350dp"
+                    android:downloadImage="@{mealDetails.image}"
+                    android:scaleType="fitXY"
+                    tools:ignore="ImageContrastCheck" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvSaveButton"
+                style="@style/ButtonBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cvMealDetailImage">
+
+                <TextView
+                    android:id="@+id/tvSaveOrRemoveButton"
+                    style="@style/TextColor"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/save"
+                    android:textSize="12sp"
+                    app:drawableLeftCompat="@drawable/ic_heart_linear" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvYoutubeButton"
+                style="@style/ButtonBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cvMealDetailImage">
+
+                <TextView
+                    android:id="@+id/tvYoutubeButton"
+                    style="@style/TextColor"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@{mealDetails.youtubeLink}"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/watch_on_youtube"
+                    android:textSize="12sp"
+                    app:drawableStartCompat="@drawable/ic_youtube" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvErrorDetails"
+                style="@style/ErrorBackgroundDetails"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:visibility="gone"
+                app:cardCornerRadius="20dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintTop_toBottomOf="@id/cvYoutubeButton">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/no_internet_connection"
+                    android:textSize="20sp" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cvYoutubeButton">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayoutDetails"
+                    style="@style/CardCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/contentStart"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_begin="10dp" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/contentEnd"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_end="10dp" />
+
+                    <TextView
+                        android:id="@+id/tvMealNameDetails"
+                        style="@style/TextColor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:text="@{mealDetails.name}"
+                        android:textSize="30sp"
+                        app:layout_constraintEnd_toEndOf="@id/contentEnd"
+                        app:layout_constraintStart_toStartOf="@id/contentStart"
+                        app:layout_constraintTop_toTopOf="@id/constraintLayoutDetails"
+                        tools:text="MealName" />
+
+                    <TextView
+                        android:id="@+id/tvMealCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:text="@{mealDetails.category}"
+                        android:textStyle="italic"
+                        app:layout_constraintEnd_toStartOf="@id/tvMealArea"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="@id/contentStart"
+                        app:layout_constraintTop_toBottomOf="@id/tvMealNameDetails"
+                        tools:text="MealCategory" />
+
+                    <TextView
+                        android:id="@+id/tvMealArea"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:text="@{mealDetails.area}"
+                        android:textStyle="italic"
+                        app:layout_constraintEnd_toEndOf="@id/contentEnd"
+                        app:layout_constraintStart_toEndOf="@id/tvMealCategory"
+                        app:layout_constraintTop_toBottomOf="@id/tvMealNameDetails"
+                        tools:text="MealArea" />
+
+
+                    <TextView
+                        android:id="@+id/tvIngredientLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:text="@string/ingredients"
+                        android:textColor="@color/green"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="@id/contentStart"
+                        app:layout_constraintTop_toBottomOf="@id/tvMealCategory" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvIngredients"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="5dp"
+                        app:cardUseCompatPadding="true"
+                        app:layout_constraintEnd_toEndOf="@id/contentEnd"
+                        app:layout_constraintStart_toStartOf="@id/contentStart"
+                        app:layout_constraintTop_toBottomOf="@id/tvIngredientLabel">
+
+                        <GridLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:columnCount="2"
+                            android:padding="10dp">
+
+                            <TextView
+                                android:id="@+id/tvIngredient1"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient1}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient2"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient2}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient3"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient3}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient4"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient4}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient5"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient5}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient6"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient6}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient7"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient7}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient8"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient8}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient9"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient9}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient10"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient10}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient11"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient11}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient12"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient12}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient13"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient13}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient14"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient14}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient15"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient15}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient16"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient16}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient17"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient17}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient18"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient18}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient19"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient19}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvIngredient20"
+                                style="@style/TextColor"
+                                android:layout_column="0"
+                                android:text="@{mealDetails.ingredient20}"
+                                tools:text="Ingredient" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure1"
+                                android:layout_row="0"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure1}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure2"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure2}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure3"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure3}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure4"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure4}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure5"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure5}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure6"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure6}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure7"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure7}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure8"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure8}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure9"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure9}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure10"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure10}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure11"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure11}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure12"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure12}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure13"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure13}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure14"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure14}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure15"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure15}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure16"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure16}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure17"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure17}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure18"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure18}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure19"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure19}"
+                                tools:text="Measure" />
+
+                            <TextView
+                                android:id="@+id/tvMeasure20"
+                                android:layout_column="1"
+                                android:layout_gravity="end"
+                                android:padding="4dp"
+                                android:text="@{mealDetails.measure20}"
+                                tools:text="Measure" />
+
+                        </GridLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/tvInstructionsLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/instructions"
+                        android:textColor="@color/green"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="@id/contentStart"
+                        app:layout_constraintTop_toBottomOf="@id/cvIngredients" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="50dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="5dp"
+                        app:cardUseCompatPadding="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/contentEnd"
+                        app:layout_constraintStart_toStartOf="@id/contentStart"
+                        app:layout_constraintTop_toBottomOf="@id/tvInstructionsLabel">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="@{mealDetails.instructions}"
+                            tools:text="Instructions" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>

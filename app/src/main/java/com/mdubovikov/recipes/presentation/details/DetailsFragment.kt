@@ -1,22 +1,185 @@
 package com.mdubovikov.recipes.presentation.details
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
+import com.mdubovikov.recipes.R
+import com.mdubovikov.recipes.common.Result
 import com.mdubovikov.recipes.databinding.FragmentDetailsBinding
+import com.mdubovikov.recipes.domain.model.MealDetailsModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class DetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
+    private val viewModel: DetailsViewModel by viewModels()
+    private val navigationArgs: DetailsFragmentArgs by navArgs()
+    private fun getMealIdArgs() = navigationArgs.mealId
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDetailsBinding.inflate(inflater, container, false)
-        return binding.root
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
+        val view = binding.root
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.setupMealId(getMealIdArgs())
+                viewModel.meal.collectLatest {
+                    with(binding) {
+                        when (it) {
+                            is Result.Loading -> {
+                                cvDetails.visibility = View.VISIBLE
+                                cvErrorDetails.visibility = View.GONE
+                            }
+
+                            is Result.Success -> {
+                                cvDetails.visibility = View.VISIBLE
+                                cvErrorDetails.visibility = View.GONE
+
+                                it.data?.let { meal ->
+                                    setupUI(meal)
+                                    binding.cvSaveButton.setOnClickListener {
+                                        saveMeal(meal)
+                                    }
+                                }
+                            }
+
+                            is Result.Error -> {
+                                cvDetails.visibility = View.GONE
+                                cvErrorDetails.visibility = View.VISIBLE
+                                ivMealDetails.setImageResource(R.drawable.ic_error)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun saveMeal(mealDetailsModel: MealDetailsModel) {
+        viewModel.saveMeal(mealDetailsModel)
+    }
+
+    private fun setupUI(mealDetailsModel: MealDetailsModel) = binding.apply {
+
+        binding.mealDetails = mealDetailsModel
+
+        viewModel.imageButton.observe(viewLifecycleOwner) {
+            binding.tvSaveOrRemoveButton.setCompoundDrawablesWithIntrinsicBounds(
+                AppCompatResources.getDrawable(requireContext(), it), null, null, null
+            )
+        }
+
+        viewModel.saveOrSavedText.observe(viewLifecycleOwner) {
+            binding.tvSaveOrRemoveButton.text = getString(it)
+        }
+
+        binding.cvYoutubeButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(mealDetailsModel.youtubeLink))
+            startActivity(intent)
+        }
+
+        if (mealDetailsModel.ingredient1.isNullOrBlank() && mealDetailsModel.measure1.isNullOrBlank()) {
+            tvIngredient1.visibility = View.GONE
+            tvMeasure1.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient2.isNullOrBlank() && mealDetailsModel.measure2.isNullOrBlank()) {
+            tvIngredient2.visibility = View.GONE
+            tvMeasure2.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient3.isNullOrBlank() && mealDetailsModel.measure3.isNullOrBlank()) {
+            tvIngredient3.visibility = View.GONE
+            tvMeasure3.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient4.isNullOrBlank() && mealDetailsModel.measure4.isNullOrBlank()) {
+            tvIngredient4.visibility = View.GONE
+            tvMeasure4.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient5.isNullOrBlank() && mealDetailsModel.measure5.isNullOrBlank()) {
+            tvIngredient5.visibility = View.GONE
+            tvMeasure5.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient6.isNullOrBlank() && mealDetailsModel.measure6.isNullOrBlank()) {
+            tvIngredient6.visibility = View.GONE
+            tvMeasure6.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient7.isNullOrBlank() && mealDetailsModel.measure7.isNullOrBlank()) {
+            tvIngredient7.visibility = View.GONE
+            tvMeasure7.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient8.isNullOrBlank() && mealDetailsModel.measure8.isNullOrBlank()) {
+            tvIngredient8.visibility = View.GONE
+            tvMeasure8.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient9.isNullOrBlank() && mealDetailsModel.measure9.isNullOrBlank()) {
+            tvIngredient9.visibility = View.GONE
+            tvMeasure9.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient10.isNullOrBlank() && mealDetailsModel.measure10.isNullOrBlank()) {
+            tvIngredient10.visibility = View.GONE
+            tvMeasure10.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient11.isNullOrBlank() && mealDetailsModel.measure11.isNullOrBlank()) {
+            tvIngredient11.visibility = View.GONE
+            tvMeasure11.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient12.isNullOrBlank() && mealDetailsModel.measure12.isNullOrBlank()) {
+            tvIngredient12.visibility = View.GONE
+            tvMeasure12.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient13.isNullOrBlank() && mealDetailsModel.measure13.isNullOrBlank()) {
+            tvIngredient13.visibility = View.GONE
+            tvMeasure13.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient14.isNullOrBlank() && mealDetailsModel.measure14.isNullOrBlank()) {
+            tvIngredient14.visibility = View.GONE
+            tvMeasure14.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient15.isNullOrBlank() && mealDetailsModel.measure15.isNullOrBlank()) {
+            tvIngredient15.visibility = View.GONE
+            tvMeasure15.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient16.isNullOrBlank() && mealDetailsModel.measure16.isNullOrBlank()) {
+            tvIngredient16.visibility = View.GONE
+            tvMeasure16.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient17.isNullOrBlank() && mealDetailsModel.measure17.isNullOrBlank()) {
+            tvIngredient17.visibility = View.GONE
+            tvMeasure17.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient18.isNullOrBlank() && mealDetailsModel.measure18.isNullOrBlank()) {
+            tvIngredient18.visibility = View.GONE
+            tvMeasure18.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient19.isNullOrBlank() && mealDetailsModel.measure19.isNullOrBlank()) {
+            tvIngredient19.visibility = View.GONE
+            tvMeasure19.visibility = View.GONE
+        }
+        if (mealDetailsModel.ingredient20.isNullOrBlank() && mealDetailsModel.measure20.isNullOrBlank()) {
+            tvIngredient20.visibility = View.GONE
+            tvMeasure20.visibility = View.GONE
+        }
     }
 }
