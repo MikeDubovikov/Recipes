@@ -60,25 +60,29 @@
             android:id="@+id/tvCategoryText"
             style="@style/TextColor"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginHorizontal="8dp"
+            android:gravity="center|start"
             android:text="@string/categories"
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/tvCategoryErrorMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/error"
-            android:visibility="gone" />
-
-        <ProgressBar
-            android:id="@+id/pbCategory"
-            style="?android:attr/progressBarStyle"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvErrorCategory"
+            style="@style/ErrorBackgroundCategory"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" />
+            android:layout_height="150dp"
+            android:visibility="gone"
+            app:cardCornerRadius="20dp"
+            app:cardUseCompatPadding="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/no_internet_connection"
+                android:textSize="20sp" />
+
+        </com.google.android.material.card.MaterialCardView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCategories"
@@ -88,28 +92,46 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_category" />
 
-        <TextView
-            android:id="@+id/tvCategoryMeal"
-            style="@style/TextColor"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:textSize="20sp"
-            tools:text="@string/meals" />
+            android:layout_height="50dp"
+            android:orientation="horizontal">
 
-        <ProgressBar
-            android:id="@+id/pbMeals"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+            <TextView
+                android:id="@+id/tvCategoryMeal"
+                style="@style/TextColor"
+                android:layout_width="155dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="8dp"
+                android:textSize="20sp"
+                tools:text="@string/meals" />
 
-        <TextView
-            android:id="@+id/tvMealErrorMessage"
+            <ProgressBar
+                android:id="@+id/pbMeals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvErrorMeals"
+            style="@style/ErrorBackgroundMeals"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/error"
-            android:visibility="gone" />
+            android:layout_height="350dp"
+            android:visibility="gone"
+            app:cardCornerRadius="20dp"
+            app:cardUseCompatPadding="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/no_internet_connection"
+                android:textSize="20sp" />
+
+        </com.google.android.material.card.MaterialCardView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMeals"

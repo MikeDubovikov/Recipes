@@ -76,14 +76,25 @@ class HomeFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.categories.collectLatest { categories ->
-                    when (categories) {
-                        is Result.Loading -> {}
+                    with(binding) {
+                        when (categories) {
+                            is Result.Loading -> {
+                                cvErrorCategory.visibility = View.GONE
+                                rvCategories.visibility = View.VISIBLE
+                            }
 
-                        is Result.Success -> {
-                            categoryAdapter.submitList(categories.data)
+                            is Result.Success -> {
+                                cvErrorCategory.visibility = View.GONE
+                                rvCategories.visibility = View.VISIBLE
+
+                                categoryAdapter.submitList(categories.data)
+                            }
+
+                            is Result.Error -> {
+                                cvErrorCategory.visibility = View.VISIBLE
+                                rvCategories.visibility = View.GONE
+                            }
                         }
-
-                        is Result.Error -> {}
                     }
                 }
             }
@@ -92,22 +103,36 @@ class HomeFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.meals.collectLatest { meals ->
-                    when (meals) {
-                        is Result.Loading -> {}
+                    with(binding) {
+                        when (meals) {
+                            is Result.Loading -> {
+                                pbMeals.visibility = View.VISIBLE
+                                cvErrorMeals.visibility = View.GONE
+                                rvMeals.visibility = View.VISIBLE
+                            }
 
-                        is Result.Success -> {
-                            if (meals.data?.contains(MealModel()) == true) {
-                                Toast.makeText(
-                                    requireContext(),
-                                    getString(R.string.meals_not_found),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            } else {
-                                mealAdapter.submitList(meals.data)
+                            is Result.Success -> {
+                                pbMeals.visibility = View.GONE
+                                cvErrorMeals.visibility = View.GONE
+                                rvMeals.visibility = View.VISIBLE
+
+                                if (meals.data?.contains(MealModel()) == true) {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        getString(R.string.meals_not_found),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    mealAdapter.submitList(meals.data)
+                                }
+                            }
+
+                            is Result.Error -> {
+                                pbMeals.visibility = View.GONE
+                                cvErrorMeals.visibility = View.VISIBLE
+                                rvMeals.visibility = View.GONE
                             }
                         }
-
-                        is Result.Error -> {}
                     }
                 }
             }

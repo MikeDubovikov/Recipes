@@ -43,5 +43,13 @@
         <item name="android:backgroundTint">@color/grey</item>
     </style>
 
+    <style name="ErrorBackgroundCategory">
+        <item name="android:backgroundTint">@color/eerie_black2</item>
+    </style>
+
+    <style name="ErrorBackgroundMeals">
+        <item name="android:backgroundTint">@color/eerie_black</item>
+    </style>
+
     <style name="Theme.Recipes" parent="Base.Theme.Recipes" />
 </resources>
