@@ -18,6 +18,7 @@
     <string name="instructions">Instructions</string>
     <string name="watch_on_youtube">Youtube</string>
     <string name="no_internet_connection">No internet connection</string>
+    <string name="no_saved">No saved meals</string>
 
     <string-array name="searches">
         <item>Search by name</item>
