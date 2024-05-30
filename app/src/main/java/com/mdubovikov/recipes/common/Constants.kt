@@ -8,6 +8,7 @@ object Constants {
 
     const val SELECTED_SEARCH = "SELECTED_SEARCH"
     const val SELECTED_CATEGORY = "SELECTED_CATEGORY"
+    const val DATA_STORE_NAME = "SETTINGS"
 
     object Endpoints {
         const val CATEGORIES = "categories.php"
