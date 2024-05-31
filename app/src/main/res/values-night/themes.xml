@@ -55,5 +55,13 @@
         <item name="android:backgroundTint">@color/eerie_black2</item>
     </style>
 
+    <style name="CardSettings">
+        <item name="android:backgroundTint">@color/eerie_black2</item>
+    </style>
+
+    <style name="IconMore">
+        <item name="android:src">@drawable/ic_more_night</item>
+    </style>
+
     <style name="Theme.Recipes" parent="Base.Theme.Recipes" />
 </resources>

@@ -18,6 +18,9 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        buildConfigField("String", "AUTHOR", "\"Mikhail Dubovikov\"")
+        resourceConfigurations += listOf("en", "ru")
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
