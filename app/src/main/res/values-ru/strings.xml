@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Рецепты</string>
+    <string name="title_home">Главная</string>
+    <string name="title_saved">Сохранённые</string>
+    <string name="title_details">Детали</string>
+    <string name="title_settings">Настройки</string>
+    <string name="save">Сохранить</string>
+    <string name="saved">Сохранено</string>
+    <string name="meals">Блюда</string>
+    <string name="categories">Категории</string>
+    <string name="search_meals">Поиск…</string>
+    <string name="search">Поиск</string>
+    <string name="choose_search">Выберите критерии поиска</string>
+    <string name="meals_not_found">Блюда не найдены</string>
+    <string name="button_custom_search">Кнопка настраимого поиска</string>
+    <string name="meal_details">Детали блюда</string>
+    <string name="ingredients">Ингредиенты</string>
+    <string name="instructions">Инструкции</string>
+    <string name="no_internet_connection">Нет интернет соединения</string>
+    <string name="no_saved">Нет сохранённых блюд</string>
+    <string name="change_theme">Сменить тему</string>
+    <string name="change_language">Сменить язык</string>
+    <string name="icon_more">Иконка действия</string>
+    <string name="about">О приложении</string>
+    <string name="version">Версия</string>
+    <string name="author">Автор</string>
+    <string name="choose_language">Выберите язык</string>
+    <string name="choose_theme">Выберите тему</string>
+    <string name="version_author">Версия: %1$s \n\nАвтор: %2$s</string>
+    <string name="ok">ОК</string>
+
+    <string-array name="searches">
+        <item>Поиск по имени</item>
+        <item>Поиск по первой букве</item>
+        <item>Поиск по кухне</item>
+        <item>Поиск по ингредиенту</item>
+    </string-array>
+
+    <string-array name="languages">
+        <item>Английский</item>
+        <item>Русский</item>
+        <item>По умолчанию</item>
+    </string-array>
+
+    <string-array name="themes">
+        <item>Светлая</item>
+        <item>Тёмная</item>
+        <item>По умолчанию</item>
+    </string-array>
+
+</resources>
