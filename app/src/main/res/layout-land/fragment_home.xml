@@ -22,7 +22,7 @@
                 android:id="@+id/cvSearch"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="7"
                 app:cardCornerRadius="20dp"
                 app:cardUseCompatPadding="true">
 
@@ -101,18 +101,18 @@
             <TextView
                 android:id="@+id/tvCategoryMeal"
                 style="@style/TextColor"
-                android:layout_width="155dp"
+                android:layout_width="390dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="8dp"
                 android:textSize="20sp"
-                tools:text="@string/meals" />
+                tools:text="Miscellaneous" />
 
             <ProgressBar
                 android:id="@+id/pbMeals"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone" />
+                tools:visibility="gone" />
 
         </LinearLayout>
 
@@ -140,7 +140,7 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="50dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
+            app:spanCount="4"
             tools:listitem="@layout/item_meal" />
 
     </LinearLayout>
