@@ -50,7 +50,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:contentDescription="@string/button_custom_search"
-                    android:src="@drawable/ic_menu" />
+                    android:src="@drawable/ic_menu"
+                    tools:ignore="ImageContrastCheck" />
 
             </com.google.android.material.card.MaterialCardView>
 

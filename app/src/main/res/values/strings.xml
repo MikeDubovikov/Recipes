@@ -12,7 +12,7 @@
     <string name="search">Search</string>
     <string name="choose_search">Choose category of search</string>
     <string name="meals_not_found">Meals not found</string>
-    <string name="button_custom_search">Button custom search</string>
+    <string name="button_custom_search">Category of search</string>
     <string name="meal_details">Meal details</string>
     <string name="ingredients">Ingredients</string>
     <string name="instructions">Instructions</string>

@@ -21,7 +21,11 @@ import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 class SettingsFragment : Fragment() {
-    private lateinit var binding: FragmentSettingsBinding
+
+    private var _binding: FragmentSettingsBinding? = null
+    val binding: FragmentSettingsBinding
+        get() = _binding ?: throw IllegalStateException("Fragment $this binding cannot be accessed")
+
     private var selectedTheme by Delegates.notNull<Int>()
     private var selectedLanguage by Delegates.notNull<Int>()
 
@@ -30,14 +34,14 @@ class SettingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setup()
+        getDataStoreValues()
 
         with(binding) {
             changeTheme.setOnClickListener { selectTheme() }
@@ -46,7 +50,7 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun setup() {
+    private fun getDataStoreValues() {
         lifecycleScope.launch {
             selectedTheme = DataCoordinator.shared.getTheme()
             selectedLanguage = DataCoordinator.shared.getLanguage()
@@ -64,7 +68,7 @@ class SettingsFragment : Fragment() {
                     1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                     2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 }
-                setup()
+                getDataStoreValues()
                 dialog.dismiss()
             }
             .create()
@@ -108,5 +112,10 @@ class SettingsFragment : Fragment() {
             .setPositiveButton(getString(R.string.ok), null)
             .create()
         dialog.show()
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

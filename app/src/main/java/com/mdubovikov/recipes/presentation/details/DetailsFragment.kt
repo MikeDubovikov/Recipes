@@ -25,7 +25,10 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class DetailsFragment : Fragment() {
 
-    private lateinit var binding: FragmentDetailsBinding
+    private var _binding: FragmentDetailsBinding? = null
+    val binding: FragmentDetailsBinding
+        get() = _binding ?: throw IllegalStateException("Fragment $this binding cannot be accessed")
+
     private val viewModel: DetailsViewModel by viewModels()
     private val navigationArgs: DetailsFragmentArgs by navArgs()
     private fun getMealIdArgs() = navigationArgs.mealId
@@ -35,9 +38,8 @@ class DetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
-        val view = binding.root
-        return view
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -181,5 +183,10 @@ class DetailsFragment : Fragment() {
             tvIngredient20.visibility = View.GONE
             tvMeasure20.visibility = View.GONE
         }
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

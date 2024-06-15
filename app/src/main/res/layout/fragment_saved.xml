@@ -16,7 +16,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/no_saved"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        tools:ignore="TextContrastCheck"
+        tools:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSaved"

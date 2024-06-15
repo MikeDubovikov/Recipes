@@ -13,7 +13,7 @@
     <string name="search">Поиск</string>
     <string name="choose_search">Выберите критерии поиска</string>
     <string name="meals_not_found">Блюда не найдены</string>
-    <string name="button_custom_search">Кнопка настраимого поиска</string>
+    <string name="button_custom_search">Критерии поиска</string>
     <string name="meal_details">Детали блюда</string>
     <string name="ingredients">Ингредиенты</string>
     <string name="instructions">Инструкции</string>

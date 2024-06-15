@@ -19,7 +19,10 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SavedFragment : Fragment() {
 
-    private lateinit var binding: FragmentSavedBinding
+    private var _binding: FragmentSavedBinding? = null
+    val binding: FragmentSavedBinding
+        get() = _binding ?: throw IllegalStateException("Fragment $this binding cannot be accessed")
+
     private val viewModel: SavedViewModel by viewModels()
     private val mealAdapter: MealAdapter by lazy { MealAdapter(::onMealClick, ::onSaveIconClicked) }
 
@@ -28,10 +31,14 @@ class SavedFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSavedBinding.inflate(inflater, container, false)
-        val view = binding.root
+        _binding = FragmentSavedBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.rvSaved.adapter = mealAdapter
         observeFavoriteMeals()
-        return view
     }
 
     private fun observeFavoriteMeals() {
@@ -51,11 +58,6 @@ class SavedFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.rvSaved.adapter = mealAdapter
-    }
-
     private fun onMealClick(mealId: Int) {
         val action =
             SavedFragmentDirections.actionSavedFragmentToDetailsFragment(mealId = mealId)
@@ -67,7 +69,8 @@ class SavedFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         binding.rvSaved.adapter = null
+        _binding = null
+        super.onDestroyView()
     }
 }

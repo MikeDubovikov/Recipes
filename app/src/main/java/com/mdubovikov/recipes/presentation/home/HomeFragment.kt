@@ -34,7 +34,11 @@ import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-    private lateinit var binding: FragmentHomeBinding
+
+    private var _binding: FragmentHomeBinding? = null
+    val binding: FragmentHomeBinding
+        get() = _binding ?: throw IllegalStateException("Fragment $this binding cannot be accessed")
+
     private var selectedItem by Delegates.notNull<Int>()
     private var selectedCategory by Delegates.notNull<String>()
     private val viewModel: HomeViewModel by viewModels()
@@ -53,10 +57,8 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val view = binding.root
-        setupSearchView()
-        return view
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -67,6 +69,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupSearchView()
         with(binding) {
             rvMeals.adapter = mealAdapter
             rvCategories.adapter = categoryAdapter
@@ -209,8 +212,9 @@ class HomeFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         binding.rvCategories.adapter = null
         binding.rvMeals.adapter = null
+        _binding = null
+        super.onDestroyView()
     }
 }
