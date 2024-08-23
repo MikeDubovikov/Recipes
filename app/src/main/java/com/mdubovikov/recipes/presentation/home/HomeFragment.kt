@@ -196,6 +196,7 @@ class HomeFragment : Fragment() {
             .setTitle(R.string.choose_search)
             .setSingleChoiceItems(searchItems, selectedItem) { dialog, which ->
                 selectedItem = which
+                binding.svMeals.setQuery("", false)
                 dialog.dismiss()
             }
             .create()
