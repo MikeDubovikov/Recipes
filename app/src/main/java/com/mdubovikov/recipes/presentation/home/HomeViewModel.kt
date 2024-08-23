@@ -11,15 +11,12 @@ import com.mdubovikov.recipes.common.Constants.Queries.SEARCH_BY_NAME
 import com.mdubovikov.recipes.common.Result
 import com.mdubovikov.recipes.domain.model.CategoryModel
 import com.mdubovikov.recipes.domain.model.MealModel
-import com.mdubovikov.recipes.domain.use_case.AddOrRemoveMealUseCase
+import com.mdubovikov.recipes.domain.use_case.ChangeSavedStatusMealUseCase
 import com.mdubovikov.recipes.domain.use_case.GetCategoriesUseCase
 import com.mdubovikov.recipes.domain.use_case.GetMealsUseCase
 import com.mdubovikov.recipes.domain.use_case.GetRandomMealsUseCase
 import com.mdubovikov.recipes.domain.use_case.IsMealInSavedUseCase
-import com.mdubovikov.recipes.domain.use_case.SearchMealsByAreaUseCase
-import com.mdubovikov.recipes.domain.use_case.SearchMealsByFirstLetterUseCase
-import com.mdubovikov.recipes.domain.use_case.SearchMealsByIngredientUseCase
-import com.mdubovikov.recipes.domain.use_case.SearchMealsByNameUseCase
+import com.mdubovikov.recipes.domain.use_case.SearchMealsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -39,12 +36,9 @@ class HomeViewModel @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     private val getMealsUseCase: GetMealsUseCase,
     private val getRandomMealsUseCase: GetRandomMealsUseCase,
-    private val searchMealsByNameUseCase: SearchMealsByNameUseCase,
-    private val searchMealsByAreaUseCase: SearchMealsByAreaUseCase,
-    private val searchMealsByFirstLetterUseCase: SearchMealsByFirstLetterUseCase,
-    private val searchMealsByIngredientUseCase: SearchMealsByIngredientUseCase,
+    private val searchMealsUseCase: SearchMealsUseCase,
     private val isMealInSavedUseCase: IsMealInSavedUseCase,
-    private val addOrRemoveMealUseCase: AddOrRemoveMealUseCase,
+    private val changeSavedStatusMealUseCase: ChangeSavedStatusMealUseCase,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
@@ -69,10 +63,26 @@ class HomeViewModel @Inject constructor(
             if (query != null) {
                 when (queryKey) {
                     CATEGORY -> getMealsUseCase.invoke(category = query)
-                    SEARCH_BY_NAME -> searchMealsByNameUseCase.invoke(query = query)
-                    SEARCH_BY_AREA -> searchMealsByAreaUseCase.invoke(query = query)
-                    SEARCH_BY_FIRST_LETTER -> searchMealsByFirstLetterUseCase.invoke(query = query)
-                    SEARCH_BY_INGREDIENT -> searchMealsByIngredientUseCase.invoke(query = query)
+                    SEARCH_BY_NAME -> searchMealsUseCase.search(
+                        query = query,
+                        searchKey = SEARCH_BY_NAME
+                    )
+
+                    SEARCH_BY_FIRST_LETTER -> searchMealsUseCase.search(
+                        query = query,
+                        searchKey = SEARCH_BY_FIRST_LETTER
+                    )
+
+                    SEARCH_BY_AREA -> searchMealsUseCase.search(
+                        query = query,
+                        searchKey = SEARCH_BY_AREA
+                    )
+
+                    SEARCH_BY_INGREDIENT -> searchMealsUseCase.search(
+                        query = query,
+                        searchKey = SEARCH_BY_INGREDIENT
+                    )
+
                     else -> getRandomMealsUseCase.invoke()
                 }
             } else flowOf()
@@ -112,7 +122,7 @@ class HomeViewModel @Inject constructor(
 
     fun savedIconClicked(meal: MealModel) {
         viewModelScope.launch(dispatcher) {
-            addOrRemoveMealUseCase.addOrRemoveMeal(meal)
+            changeSavedStatusMealUseCase.changeStatus(meal)
         }
     }
 }

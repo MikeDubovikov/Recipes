@@ -8,7 +8,7 @@ import com.mdubovikov.recipes.R
 import com.mdubovikov.recipes.common.Result
 import com.mdubovikov.recipes.data.mapper.MealMapper
 import com.mdubovikov.recipes.domain.model.MealDetailsModel
-import com.mdubovikov.recipes.domain.use_case.AddOrRemoveMealUseCase
+import com.mdubovikov.recipes.domain.use_case.ChangeSavedStatusMealUseCase
 import com.mdubovikov.recipes.domain.use_case.GetMealDetailsUseCase
 import com.mdubovikov.recipes.domain.use_case.IsMealInSavedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
     private val getMealDetailsUseCase: GetMealDetailsUseCase,
-    private val addOrRemoveMealUseCase: AddOrRemoveMealUseCase,
+    private val changeSavedStatusMealUseCase: ChangeSavedStatusMealUseCase,
     private val isMealInSavedUseCase: IsMealInSavedUseCase,
     private val mapper: MealMapper,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -56,7 +56,7 @@ class DetailsViewModel @Inject constructor(
 
     fun saveMeal(mealDetailsModel: MealDetailsModel) {
         viewModelScope.launch(dispatcher) {
-            addOrRemoveMealUseCase.addOrRemoveMeal(
+            changeSavedStatusMealUseCase.changeStatus(
                 mapper.mapMealDetailsModelToMealModel(
                     mealDetailsModel
                 )

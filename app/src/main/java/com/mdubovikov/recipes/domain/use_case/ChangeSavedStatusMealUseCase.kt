@@ -5,12 +5,12 @@ import com.mdubovikov.recipes.domain.model.MealModel
 import com.mdubovikov.recipes.domain.repository.MealRepository
 import javax.inject.Inject
 
-class AddOrRemoveMealUseCase @Inject constructor(
+class ChangeSavedStatusMealUseCase @Inject constructor(
     private val mealRepository: MealRepository,
     private val mealMapper: MealMapper,
     private val isMealInSavedUseCase: IsMealInSavedUseCase
 ) {
-    suspend fun addOrRemoveMeal(meal: MealModel) {
+    suspend fun changeStatus(meal: MealModel) {
         if (isMealInSavedUseCase.isMealInSaved(meal.id)) {
             mealRepository.removeFromSavedMeals(mealMapper.mapMealModelToMealEntity(meal.copy(isSaved = false)))
         } else {
