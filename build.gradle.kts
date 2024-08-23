@@ -4,10 +4,6 @@ buildscript {
         google()
         mavenCentral()
     }
-    dependencies {
-        classpath(libs.navigation.safe.args.gradle.plugin)
-        classpath(libs.hilt.android.gradle.plugin)
-    }
 }
 
 plugins {
@@ -15,4 +11,5 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     alias(libs.plugins.kapt) apply false
     alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.navigation.safeargs) apply false
 }
