@@ -1,9 +1,9 @@
 package com.mdubovikov.recipes.presentation
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -12,10 +12,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.mdubovikov.recipes.R
-import com.mdubovikov.recipes.common.data_store.DataCoordinator
-import com.mdubovikov.recipes.common.data_store.getLanguage
-import com.mdubovikov.recipes.common.data_store.getTheme
 import com.mdubovikov.recipes.databinding.ActivityMainBinding
+import com.mdubovikov.recipes.presentation.settings.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -23,14 +21,24 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
-    val binding: ActivityMainBinding
+    private val binding: ActivityMainBinding
         get() = _binding ?: throw IllegalStateException("Activity $this binding cannot be accessed")
+
+    private val viewModel: SettingsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        lifecycleScope.launch {
+            when (viewModel.getTheme()) {
+                0 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            }
+        }
 
         val navView: BottomNavigationView = binding.navView
 
@@ -47,26 +55,6 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        checkDataStoreValues()
-
-    }
-
-    private fun checkDataStoreValues() {
-        DataCoordinator.shared.initialize(context = baseContext)
-
-        lifecycleScope.launch {
-            when (DataCoordinator.shared.getTheme()) {
-                0 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            }
-
-            when (DataCoordinator.shared.getLanguage()) {
-                0 -> AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
-                1 -> AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ru"))
-                2 -> AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList())
-            }
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

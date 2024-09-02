@@ -8,23 +8,23 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.mdubovikov.recipes.BuildConfig
 import com.mdubovikov.recipes.R
-import com.mdubovikov.recipes.common.data_store.DataCoordinator
-import com.mdubovikov.recipes.common.data_store.getLanguage
-import com.mdubovikov.recipes.common.data_store.getTheme
-import com.mdubovikov.recipes.common.data_store.updateLanguage
-import com.mdubovikov.recipes.common.data_store.updateTheme
 import com.mdubovikov.recipes.databinding.FragmentSettingsBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
+@AndroidEntryPoint
 class SettingsFragment : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
-    val binding: FragmentSettingsBinding
+    private val binding: FragmentSettingsBinding
         get() = _binding ?: throw IllegalStateException("Fragment $this binding cannot be accessed")
+
+    private val viewModel: SettingsViewModel by viewModels()
 
     private var selectedTheme by Delegates.notNull<Int>()
     private var selectedLanguage by Delegates.notNull<Int>()
@@ -52,8 +52,8 @@ class SettingsFragment : Fragment() {
 
     private fun getDataStoreValues() {
         lifecycleScope.launch {
-            selectedTheme = DataCoordinator.shared.getTheme()
-            selectedLanguage = DataCoordinator.shared.getLanguage()
+            selectedTheme = viewModel.getTheme()
+            selectedLanguage = viewModel.getLanguage()
         }
     }
 
@@ -62,14 +62,9 @@ class SettingsFragment : Fragment() {
         val dialog = AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.choose_theme))
             .setSingleChoiceItems(themes, selectedTheme) { dialog, which ->
-                DataCoordinator.shared.updateTheme(which)
-                when (which) {
-                    0 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                }
-                getDataStoreValues()
+                viewModel.setTheme(value = which)
                 dialog.dismiss()
+                activity?.recreate()
             }
             .create()
         dialog.show()
@@ -80,21 +75,11 @@ class SettingsFragment : Fragment() {
         val dialog = AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.choose_language))
             .setSingleChoiceItems(languages, selectedLanguage) { dialog, which ->
+                viewModel.setLanguage(value = which)
                 when (which) {
-                    0 -> {
-                        DataCoordinator.shared.updateLanguage(0)
-                        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
-                    }
-
-                    1 -> {
-                        DataCoordinator.shared.updateLanguage(1)
-                        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ru"))
-                    }
-
-                    2 -> {
-                        DataCoordinator.shared.updateLanguage(2)
-                        AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList())
-                    }
+                    0 -> AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
+                    1 -> AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ru"))
+                    2 -> AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList())
                 }
                 dialog.dismiss()
             }

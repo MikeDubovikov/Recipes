@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 class DetailsFragment : Fragment() {
 
     private var _binding: FragmentDetailsBinding? = null
-    val binding: FragmentDetailsBinding
+    private val binding: FragmentDetailsBinding
         get() = _binding ?: throw IllegalStateException("Fragment $this binding cannot be accessed")
 
     private val viewModel: DetailsViewModel by viewModels()

@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 class SavedFragment : Fragment() {
 
     private var _binding: FragmentSavedBinding? = null
-    val binding: FragmentSavedBinding
+    private val binding: FragmentSavedBinding
         get() = _binding ?: throw IllegalStateException("Fragment $this binding cannot be accessed")
 
     private val viewModel: SavedViewModel by viewModels()

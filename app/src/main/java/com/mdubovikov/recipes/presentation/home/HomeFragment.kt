@@ -36,7 +36,7 @@ import kotlin.properties.Delegates
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-    val binding: FragmentHomeBinding
+    private val binding: FragmentHomeBinding
         get() = _binding ?: throw IllegalStateException("Fragment $this binding cannot be accessed")
 
     private var selectedItem by Delegates.notNull<Int>()
