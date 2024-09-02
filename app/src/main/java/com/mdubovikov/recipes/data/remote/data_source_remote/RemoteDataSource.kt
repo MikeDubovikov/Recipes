@@ -12,45 +12,45 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
     private val mealService: MealService,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : MealDataSource.Remote {
     override suspend fun getMeals(category: String): MealResponse =
-        withContext(ioDispatcher) {
+        withContext(dispatcher) {
             mealService.getMeals(category)
         }
 
     override suspend fun getRandomMeals(): MealResponse =
-        withContext(ioDispatcher) {
+        withContext(dispatcher) {
             mealService.getRandomMeals()
         }
 
     override suspend fun getMealDetails(mealId: Int): MealDetailsResponse =
-        withContext(ioDispatcher) {
+        withContext(dispatcher) {
             mealService.getMealDetails(mealId)
         }
 
     override suspend fun searchMealsByName(query: String): MealResponse =
-        withContext(ioDispatcher) {
+        withContext(dispatcher) {
             mealService.searchMealsByName(query)
         }
 
     override suspend fun searchMealsByArea(query: String): MealResponse =
-        withContext(ioDispatcher) {
+        withContext(dispatcher) {
             mealService.searchMealsByArea(query)
         }
 
     override suspend fun searchMealsByFirstLetter(query: String): MealResponse =
-        withContext(ioDispatcher) {
+        withContext(dispatcher) {
             mealService.searchMealsByFirstLetter(query)
         }
 
     override suspend fun searchMealsByIngredient(query: String): MealResponse =
-        withContext(ioDispatcher) {
+        withContext(dispatcher) {
             mealService.searchMealsByIngredient(query)
         }
 
     override suspend fun getCategories(): CategoryResponse =
-        withContext(ioDispatcher) {
+        withContext(dispatcher) {
             mealService.getCategories()
         }
 }

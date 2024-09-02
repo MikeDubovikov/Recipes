@@ -14,18 +14,15 @@ object CoroutinesModule {
 
     @DefaultDispatcher
     @Provides
-    internal fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
+    fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
 
     @IoDispatcher
     @Provides
-    internal fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+    fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 
     @MainDispatcher
     @Provides
-    internal fun providesMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
-
-    @Provides
-    fun providesIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+    fun provideMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
 }
 
 @Retention(AnnotationRetention.BINARY)

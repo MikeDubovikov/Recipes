@@ -12,16 +12,16 @@ import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(
     private val mealDao: MealDao,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : MealDataSource.Local {
 
     override suspend fun addToSavedMeals(meal: MealEntity) =
-        withContext(ioDispatcher) {
+        withContext(dispatcher) {
             mealDao.addToSavedMeals(meal)
         }
 
     override suspend fun removeFromSavedMeals(meal: MealEntity) =
-        withContext(ioDispatcher) {
+        withContext(dispatcher) {
             mealDao.removeFromSavedMeals(meal)
         }
 

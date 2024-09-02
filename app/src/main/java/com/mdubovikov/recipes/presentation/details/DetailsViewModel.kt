@@ -7,13 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.mdubovikov.recipes.R
 import com.mdubovikov.recipes.common.Result
 import com.mdubovikov.recipes.data.mapper.MealMapper
+import com.mdubovikov.recipes.di.IoDispatcher
 import com.mdubovikov.recipes.domain.model.MealDetailsModel
 import com.mdubovikov.recipes.domain.use_case.ChangeSavedStatusMealUseCase
 import com.mdubovikov.recipes.domain.use_case.GetMealDetailsUseCase
 import com.mdubovikov.recipes.domain.use_case.IsMealInSavedUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -30,7 +30,7 @@ class DetailsViewModel @Inject constructor(
     private val changeSavedStatusMealUseCase: ChangeSavedStatusMealUseCase,
     private val isMealInSavedUseCase: IsMealInSavedUseCase,
     private val mapper: MealMapper,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val mealId: MutableStateFlow<Int?> = MutableStateFlow(null)
