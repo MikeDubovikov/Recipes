@@ -10,7 +10,6 @@ interface MealDataSource {
 
     interface Remote {
         suspend fun getMeals(category: String): MealResponse
-        suspend fun getRandomMeals(): MealResponse
         suspend fun getMealDetails(mealId: Int): MealDetailsResponse
         suspend fun searchMealsByName(query: String): MealResponse
         suspend fun searchMealsByArea(query: String): MealResponse

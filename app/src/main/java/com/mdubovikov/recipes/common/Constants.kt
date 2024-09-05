@@ -6,8 +6,6 @@ object Constants {
 
     const val BASE_URL = "https://www.themealdb.com/api/json/v1/1/"
 
-    const val SELECTED_SEARCH = "SELECTED_SEARCH"
-    const val SELECTED_CATEGORY = "SELECTED_CATEGORY"
     const val DATA_STORE_NAME = "SETTINGS"
 
     object Endpoints {
@@ -15,12 +13,10 @@ object Constants {
         const val MEAL_DETAILS = "lookup.php"
         const val SEARCH_MEALS = "search.php"
         const val MEALS = "filter.php"
-        const val RANDOM_MEAL = "random.php"
     }
 
     object Queries {
         const val CATEGORY = "CATEGORY"
-        const val RANDOM = "RANDOM"
         const val SEARCH_BY_NAME = "SEARCH_BY_NAME"
         const val SEARCH_BY_FIRST_LETTER = "SEARCH_BY_FIRST_LETTER"
         const val SEARCH_BY_INGREDIENT = "SEARCH_BY_INGREDIENT"

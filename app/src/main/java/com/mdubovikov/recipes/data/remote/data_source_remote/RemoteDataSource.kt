@@ -19,11 +19,6 @@ class RemoteDataSource @Inject constructor(
             mealService.getMeals(category)
         }
 
-    override suspend fun getRandomMeals(): MealResponse =
-        withContext(dispatcher) {
-            mealService.getRandomMeals()
-        }
-
     override suspend fun getMealDetails(mealId: Int): MealDetailsResponse =
         withContext(dispatcher) {
             mealService.getMealDetails(mealId)

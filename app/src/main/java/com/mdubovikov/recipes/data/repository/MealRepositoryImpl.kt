@@ -36,10 +36,6 @@ class MealRepositoryImpl @Inject constructor(
         return mapper.mapListMealDtoToListMealModel(remote.getMeals(category).meals)
     }
 
-    override suspend fun getRandomMeals(): List<MealModel> {
-        return mapper.mapListMealDtoToListMealModel(remote.getRandomMeals().meals)
-    }
-
     override suspend fun getMealDetails(mealId: Int): MealDetailsModel {
         return mapper.mapMealDetailsDtoToMealDetailsModel(remote.getMealDetails(mealId).meals[0])
     }
