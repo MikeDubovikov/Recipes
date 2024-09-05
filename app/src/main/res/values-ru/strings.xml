@@ -17,7 +17,7 @@
     <string name="meal_details">Детали блюда</string>
     <string name="ingredients">Ингредиенты</string>
     <string name="instructions">Инструкции</string>
-    <string name="no_internet_connection">Нет интернет соединения</string>
+    <string name="no_internet_connection">Невозможно загрузить данные</string>
     <string name="no_saved">Нет сохранённых блюд</string>
     <string name="change_theme">Сменить тему</string>
     <string name="change_language">Сменить язык</string>
@@ -29,6 +29,7 @@
     <string name="choose_theme">Выберите тему</string>
     <string name="version_author">Версия: %1$s \n\nАвтор: %2$s</string>
     <string name="ok">ОК</string>
+    <string name="broken_link">Youtube ссылка не работает</string>
 
     <string-array name="searches">
         <item>Поиск по имени</item>

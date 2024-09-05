@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -60,7 +61,7 @@ class DetailsFragment : Fragment() {
                                 cvDetails.visibility = View.VISIBLE
                                 cvErrorDetails.visibility = View.GONE
 
-                                it.data?.let { meal ->
+                                it.data.let { meal ->
                                     setupUI(meal)
                                     binding.cvSaveButton.setOnClickListener {
                                         saveMeal(meal)
@@ -86,21 +87,37 @@ class DetailsFragment : Fragment() {
 
     private fun setupUI(mealDetailsModel: MealDetailsModel) = binding.apply {
 
-        binding.mealDetails = mealDetailsModel
+        mealDetails = mealDetailsModel
 
-        viewModel.imageButton.observe(viewLifecycleOwner) {
-            binding.tvSaveOrRemoveButton.setCompoundDrawablesWithIntrinsicBounds(
-                AppCompatResources.getDrawable(requireContext(), it), null, null, null
-            )
+        lifecycleScope.launch {
+            viewModel.imageButton.collect {
+                tvSaveOrRemoveButton.setCompoundDrawablesWithIntrinsicBounds(
+                    AppCompatResources.getDrawable(requireContext(), it),
+                    null,
+                    null,
+                    null
+                )
+            }
         }
 
-        viewModel.saveOrSavedText.observe(viewLifecycleOwner) {
-            binding.tvSaveOrRemoveButton.text = getString(it)
+        lifecycleScope.launch {
+            viewModel.saveOrSavedText.collect {
+                tvSaveOrRemoveButton.text = getString(it)
+            }
         }
 
-        binding.cvYoutubeButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(mealDetailsModel.youtubeLink))
-            startActivity(intent)
+        cvYoutubeButton.setOnClickListener {
+            val youtubeLink = mealDetailsModel.youtubeLink
+            if (!youtubeLink.isNullOrBlank()) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
+                startActivity(intent)
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.broken_link),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         if (mealDetailsModel.ingredient1.isNullOrBlank() && mealDetailsModel.measure1.isNullOrBlank()) {

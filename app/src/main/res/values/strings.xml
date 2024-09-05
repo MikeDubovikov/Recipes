@@ -17,7 +17,7 @@
     <string name="ingredients">Ingredients</string>
     <string name="instructions">Instructions</string>
     <string name="watch_on_youtube" translatable="false">Youtube</string>
-    <string name="no_internet_connection">No internet connection</string>
+    <string name="no_internet_connection">Unable to load data</string>
     <string name="no_saved">No saved meals</string>
     <string name="change_theme">Change theme</string>
     <string name="change_language">Change language</string>
@@ -29,6 +29,7 @@
     <string name="choose_theme">Choose theme</string>
     <string name="version_author">Version: %1$s \n\nAuthor: %2$s</string>
     <string name="ok">OK</string>
+    <string name="broken_link">Youtube link is broken</string>
 
     <string-array name="searches">
         <item>Search by name</item>

@@ -44,15 +44,13 @@ class SavedFragment : Fragment() {
     private fun observeFavoriteMeals() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.savedMeals.observe(viewLifecycleOwner) { meals ->
-                    meals.let {
-                        if (it.isNotEmpty()) {
-                            binding.tvNoSaved.visibility = View.GONE
-                        } else {
-                            binding.tvNoSaved.visibility = View.VISIBLE
-                        }
-                        mealAdapter.submitList(it)
+                viewModel.savedMeals.collect {
+                    if (it.isNotEmpty()) {
+                        binding.tvNoSaved.visibility = View.GONE
+                    } else {
+                        binding.tvNoSaved.visibility = View.VISIBLE
                     }
+                    mealAdapter.submitList(it)
                 }
             }
         }

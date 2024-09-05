@@ -1,8 +1,6 @@
 package com.mdubovikov.recipes.presentation.saved
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.mdubovikov.recipes.di.MainDispatcher
 import com.mdubovikov.recipes.domain.model.MealModel
@@ -10,6 +8,9 @@ import com.mdubovikov.recipes.domain.use_case.ChangeSavedStatusMealUseCase
 import com.mdubovikov.recipes.domain.use_case.GetSavedMealsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,7 +21,16 @@ class SavedViewModel @Inject constructor(
     private val changeSavedStatusMealUseCase: ChangeSavedStatusMealUseCase
 ) : ViewModel() {
 
-    val savedMeals: LiveData<List<MealModel>> = getSavedMealsUseCase.invoke().asLiveData()
+    private val _savedMeals: MutableStateFlow<List<MealModel>> = MutableStateFlow(listOf())
+    val savedMeals: StateFlow<List<MealModel>> = _savedMeals.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            getSavedMealsUseCase.invoke().collect {
+                _savedMeals.value = it
+            }
+        }
+    }
 
     fun savedIconClicked(meal: MealModel) {
         viewModelScope.launch(dispatcher) {

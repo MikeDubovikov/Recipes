@@ -1,7 +1,5 @@
 package com.mdubovikov.recipes.presentation.details
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mdubovikov.recipes.R
@@ -18,6 +16,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
@@ -48,11 +47,11 @@ class DetailsViewModel @Inject constructor(
             initialValue = Result.Loading
         )
 
-    private val _imageButton = MutableLiveData<Int>()
-    val imageButton: LiveData<Int> = _imageButton
+    private val _imageButton: MutableStateFlow<Int> = MutableStateFlow(R.drawable.ic_heart_linear)
+    val imageButton: StateFlow<Int> = _imageButton.asStateFlow()
 
-    private val _saveOrSavedText = MutableLiveData<Int>()
-    val saveOrSavedText: LiveData<Int> = _saveOrSavedText
+    private val _saveOrSavedText: MutableStateFlow<Int> = MutableStateFlow(R.string.save)
+    val saveOrSavedText: StateFlow<Int> = _saveOrSavedText.asStateFlow()
 
     fun saveMeal(mealDetailsModel: MealDetailsModel) {
         viewModelScope.launch(dispatcher) {
@@ -72,11 +71,11 @@ class DetailsViewModel @Inject constructor(
 
     private suspend fun setIconInButton(mealId: String) {
         if (isMealInSavedUseCase.isMealInSaved(mealId)) {
-            _imageButton.postValue(R.drawable.ic_heart_filled)
-            _saveOrSavedText.postValue(R.string.saved)
+            _imageButton.value = R.drawable.ic_heart_filled
+            _saveOrSavedText.value = R.string.saved
         } else {
-            _imageButton.postValue(R.drawable.ic_heart_linear)
-            _saveOrSavedText.postValue(R.string.save)
+            _imageButton.value = R.drawable.ic_heart_linear
+            _saveOrSavedText.value = R.string.save
         }
     }
 }
