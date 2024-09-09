@@ -11,8 +11,8 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
+            android:id="@+id/action_homeFragment_to_recipesFragment"
+            app:destination="@id/recipesFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
@@ -37,4 +37,19 @@
         android:name="com.mdubovikov.recipes.presentation.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/recipesFragment"
+        android:name="com.mdubovikov.recipes.presentation.recipes.RecipesFragment"
+        android:label="@string/meals"
+        tools:layout="@layout/fragment_recipes">
+        <argument
+            android:name="query"
+            app:argType="string" />
+        <argument
+            android:name="queryKey"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_recipesFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
 </navigation>

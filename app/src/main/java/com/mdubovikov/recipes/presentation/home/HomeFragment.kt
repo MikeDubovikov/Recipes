@@ -22,9 +22,7 @@ import com.mdubovikov.recipes.common.Constants.Queries.SEARCH_BY_NAME
 import com.mdubovikov.recipes.common.Result
 import com.mdubovikov.recipes.databinding.FragmentHomeBinding
 import com.mdubovikov.recipes.domain.model.CategoryModel
-import com.mdubovikov.recipes.domain.model.MealModel
 import com.mdubovikov.recipes.presentation.adapters.CategoryAdapter
-import com.mdubovikov.recipes.presentation.adapters.MealAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -38,10 +36,7 @@ class HomeFragment : Fragment() {
         get() = _binding ?: throw IllegalStateException("Fragment $this binding cannot be accessed")
 
     private val viewModel: HomeViewModel by viewModels()
-    private val mealAdapter: MealAdapter by lazy { MealAdapter(::onMealClick, ::onSaveIconClicked) }
     private val categoryAdapter: CategoryAdapter by lazy { CategoryAdapter(::onClickCategory) }
-
-    private var selectedCategory by Delegates.notNull<String>()
     private var selectedItem by Delegates.notNull<Int>()
 
     override fun onCreateView(
@@ -55,42 +50,35 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launch {
-            viewModel.query.collect {
-                selectedCategory = it
-            }
-        }
-        lifecycleScope.launch {
-            viewModel.selectedItem.collect {
-                selectedItem = it
-            }
-        }
+        lifecycleScope.launch { viewModel.selectedItem.collect { selectedItem = it } }
+        binding.rvCategories.adapter = categoryAdapter
+        binding.buttonCustomSearch.setOnClickListener { selectSearch() }
         setupSearchView()
-        with(binding) {
-            rvMeals.adapter = mealAdapter
-            rvCategories.adapter = categoryAdapter
-            tvCategoryMeal.text = selectedCategory
-        }
+        loadData()
+    }
 
+    private fun loadData() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.categories.collectLatest { categories ->
                     with(binding) {
                         when (categories) {
                             is Result.Loading -> {
+                                progressBar.visibility = View.VISIBLE
+                                rvCategories.visibility = View.GONE
                                 cvErrorCategory.visibility = View.GONE
-                                rvCategories.visibility = View.VISIBLE
                             }
 
                             is Result.Success -> {
-                                cvErrorCategory.visibility = View.GONE
                                 rvCategories.visibility = View.VISIBLE
-
+                                progressBar.visibility = View.GONE
+                                cvErrorCategory.visibility = View.GONE
                                 categoryAdapter.submitList(categories.data)
                             }
 
                             is Result.Error -> {
                                 cvErrorCategory.visibility = View.VISIBLE
+                                progressBar.visibility = View.GONE
                                 rvCategories.visibility = View.GONE
                             }
                         }
@@ -98,51 +86,21 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.meals.collectLatest { meals ->
-                    with(binding) {
-                        when (meals) {
-                            is Result.Loading -> {
-                                pbMeals.visibility = View.VISIBLE
-                            }
-
-                            is Result.Success -> {
-                                if (meals.data.contains(MealModel())) {
-                                    pbMeals.visibility = View.GONE
-                                    rvMeals.visibility = View.GONE
-                                    cvErrorMeals.visibility = View.GONE
-                                    cvMealsNotFound?.visibility = View.VISIBLE
-                                } else {
-                                    pbMeals.visibility = View.GONE
-                                    cvErrorMeals.visibility = View.GONE
-                                    cvMealsNotFound?.visibility = View.GONE
-                                    rvMeals.visibility = View.VISIBLE
-                                    mealAdapter.submitList(meals.data)
-                                }
-                            }
-
-                            is Result.Error -> {
-                                pbMeals.visibility = View.GONE
-                                rvMeals.visibility = View.GONE
-                                cvMealsNotFound?.visibility = View.GONE
-                                cvErrorMeals.visibility = View.VISIBLE
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        binding.buttonCustomSearch.setOnClickListener {
-            selectSearch()
-        }
     }
 
-    private fun onClickCategory(category: CategoryModel) = binding.apply {
-        viewModel.setupQuery(category.name, CATEGORY)
-        tvCategoryMeal.text = category.name
+    private fun toRecipesFragmentWithArgs(query: String, queryKey: String) {
+        val action = HomeFragmentDirections.actionHomeFragmentToRecipesFragment(
+            query = query,
+            queryKey = queryKey
+        )
+        findNavController().navigate(action)
+    }
+
+    private fun onClickCategory(category: CategoryModel) {
+        toRecipesFragmentWithArgs(
+            query = category.name,
+            queryKey = CATEGORY
+        )
     }
 
     private fun setupSearchView() {
@@ -153,23 +111,31 @@ class HomeFragment : Fragment() {
                 if (query != null) {
                     when (selectedItem) {
                         0 -> {
-                            viewModel.setupQuery(query, SEARCH_BY_NAME)
-                            binding.tvCategoryMeal.text = selectedCategory
+                            toRecipesFragmentWithArgs(
+                                query = query,
+                                queryKey = SEARCH_BY_NAME
+                            )
                         }
 
                         1 -> {
-                            viewModel.setupQuery(query, SEARCH_BY_FIRST_LETTER)
-                            binding.tvCategoryMeal.text = selectedCategory
+                            toRecipesFragmentWithArgs(
+                                query = query,
+                                queryKey = SEARCH_BY_FIRST_LETTER
+                            )
                         }
 
                         2 -> {
-                            viewModel.setupQuery(query, SEARCH_BY_AREA)
-                            binding.tvCategoryMeal.text = selectedCategory
+                            toRecipesFragmentWithArgs(
+                                query = query,
+                                queryKey = SEARCH_BY_AREA
+                            )
                         }
 
                         3 -> {
-                            viewModel.setupQuery(query, SEARCH_BY_INGREDIENT)
-                            binding.tvCategoryMeal.text = selectedCategory
+                            toRecipesFragmentWithArgs(
+                                query = query,
+                                queryKey = SEARCH_BY_INGREDIENT
+                            )
                         }
                     }
                 }
@@ -195,18 +161,8 @@ class HomeFragment : Fragment() {
         dialog.show()
     }
 
-    private fun onMealClick(mealId: Int) {
-        val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(mealId = mealId)
-        findNavController().navigate(action)
-    }
-
-    private fun onSaveIconClicked(meal: MealModel) {
-        viewModel.savedIconClicked(meal)
-    }
-
     override fun onDestroyView() {
         binding.rvCategories.adapter = null
-        binding.rvMeals.adapter = null
         _binding = null
         super.onDestroyView()
     }

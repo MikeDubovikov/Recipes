@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.mdubovikov.recipes.databinding.FragmentSavedBinding
-import com.mdubovikov.recipes.domain.model.MealModel
 import com.mdubovikov.recipes.presentation.adapters.MealAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -24,7 +23,7 @@ class SavedFragment : Fragment() {
         get() = _binding ?: throw IllegalStateException("Fragment $this binding cannot be accessed")
 
     private val viewModel: SavedViewModel by viewModels()
-    private val mealAdapter: MealAdapter by lazy { MealAdapter(::onMealClick, ::onSaveIconClicked) }
+    private val mealAdapter: MealAdapter by lazy { MealAdapter(::onMealClick) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,10 +59,6 @@ class SavedFragment : Fragment() {
         val action =
             SavedFragmentDirections.actionSavedFragmentToDetailsFragment(mealId = mealId)
         findNavController().navigate(action)
-    }
-
-    private fun onSaveIconClicked(meal: MealModel) {
-        viewModel.savedIconClicked(meal)
     }
 
     override fun onDestroyView() {
