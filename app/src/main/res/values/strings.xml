@@ -16,8 +16,8 @@
     <string name="meal_details">Meal details</string>
     <string name="ingredients">Ingredients</string>
     <string name="instructions">Instructions</string>
-    <string name="watch_on_youtube" translatable="false">Youtube</string>
-    <string name="no_internet_connection">Unable to load data</string>
+    <string name="watch_on_youtube">Video</string>
+    <string name="unable_to_load_data">Unable to load data</string>
     <string name="no_saved">No saved meals</string>
     <string name="change_theme">Change theme</string>
     <string name="change_language">Change language</string>

@@ -15,25 +15,6 @@
         android:padding="16dp">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cvButtonImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            app:cardCornerRadius="16dp">
-
-            <ImageView
-                android:id="@+id/ivButton"
-                style="@style/ButtonBackground"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:contentDescription="@string/save"
-                android:padding="4dp"
-                tools:ignore="ImageContrastCheck"
-                tools:srcCompat="@drawable/ic_heart_linear" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

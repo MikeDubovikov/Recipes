@@ -3,7 +3,7 @@ package com.mdubovikov.recipes.presentation.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.mdubovikov.recipes.databinding.ItemCategoryBinding
+import com.mdubovikov.recipes.databinding.ItemCardBinding
 import com.mdubovikov.recipes.domain.model.CategoryModel
 
 class CategoryAdapter(
@@ -12,7 +12,7 @@ class CategoryAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryItemViewHolder {
 
-        val binding = ItemCategoryBinding.inflate(
+        val binding = ItemCardBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false

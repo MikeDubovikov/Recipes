@@ -17,7 +17,8 @@
     <string name="meal_details">Детали блюда</string>
     <string name="ingredients">Ингредиенты</string>
     <string name="instructions">Инструкции</string>
-    <string name="no_internet_connection">Невозможно загрузить данные</string>
+    <string name="watch_on_youtube">Видео</string>
+    <string name="unable_to_load_data">Невозможно загрузить данные</string>
     <string name="no_saved">Нет сохранённых блюд</string>
     <string name="change_theme">Сменить тему</string>
     <string name="change_language">Сменить язык</string>

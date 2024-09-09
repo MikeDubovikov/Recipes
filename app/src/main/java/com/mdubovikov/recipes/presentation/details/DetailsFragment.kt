@@ -31,8 +31,8 @@ class DetailsFragment : Fragment() {
         get() = _binding ?: throw IllegalStateException("Fragment $this binding cannot be accessed")
 
     private val viewModel: DetailsViewModel by viewModels()
-    private val navigationArgs: DetailsFragmentArgs by navArgs()
-    private fun getMealIdArgs() = navigationArgs.mealId
+    private val args by navArgs<DetailsFragmentArgs>()
+    private val mealId by lazy { args.mealId }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +48,7 @@ class DetailsFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.setupMealId(getMealIdArgs())
+                viewModel.setupMealId(mealId)
                 viewModel.meal.collectLatest {
                     with(binding) {
                         when (it) {

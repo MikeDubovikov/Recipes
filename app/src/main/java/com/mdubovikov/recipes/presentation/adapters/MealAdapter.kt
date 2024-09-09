@@ -3,23 +3,22 @@ package com.mdubovikov.recipes.presentation.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.mdubovikov.recipes.databinding.ItemMealBinding
+import com.mdubovikov.recipes.databinding.ItemCardBinding
 import com.mdubovikov.recipes.domain.model.MealModel
 
 class MealAdapter(
-    private val onClickMeal: ((mealId: Int) -> Unit)?,
-    private val onSavedIconClicked: (MealModel) -> Unit
+    private val onClickMeal: ((mealId: Int) -> Unit)?
 ) : ListAdapter<MealModel, MealItemViewHolder>(MealItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealItemViewHolder {
 
-        val binding = ItemMealBinding.inflate(
+        val binding = ItemCardBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
 
-        return MealItemViewHolder(binding, onClickMeal, onSavedIconClicked)
+        return MealItemViewHolder(binding, onClickMeal)
     }
 
     override fun onBindViewHolder(holder: MealItemViewHolder, position: Int) {

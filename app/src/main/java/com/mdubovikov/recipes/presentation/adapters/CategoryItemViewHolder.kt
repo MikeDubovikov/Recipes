@@ -4,11 +4,11 @@ import android.net.Uri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mdubovikov.recipes.R
-import com.mdubovikov.recipes.databinding.ItemCategoryBinding
+import com.mdubovikov.recipes.databinding.ItemCardBinding
 import com.mdubovikov.recipes.domain.model.CategoryModel
 
 class CategoryItemViewHolder(
-    private val binding: ItemCategoryBinding,
+    private val binding: ItemCardBinding,
     private val onClickCategoryHome: ((category: CategoryModel) -> Unit)
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -16,13 +16,13 @@ class CategoryItemViewHolder(
 
         with(binding) {
             with(category) {
-                tvCategoryName.text = name
+                tvMealName.text = name
 
-                Glide.with(ivCategory)
+                Glide.with(ivMeal)
                     .load(Uri.parse(image))
                     .centerCrop()
                     .placeholder(R.drawable.ic_loading)
-                    .into(ivCategory)
+                    .into(ivMeal)
 
                 root.setOnClickListener { onClickCategoryHome.invoke(category) }
             }
