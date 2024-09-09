@@ -59,31 +59,25 @@ class RecipesFragment : Fragment() {
                             is Result.Loading -> {
                                 progressBar.visibility = View.VISIBLE
                                 rvMeals.visibility = View.GONE
-                                cvNotFound.visibility = View.GONE
-                                cvError.visibility = View.GONE
+                                tvMealsNotFound.visibility = View.GONE
+                                tvMealsError.visibility = View.GONE
 
                             }
 
                             is Result.Success -> {
                                 if (meals.data.contains(MealModel())) {
-                                    cvNotFound.visibility = View.VISIBLE
+                                    tvMealsNotFound.visibility = View.VISIBLE
                                     progressBar.visibility = View.GONE
-                                    rvMeals.visibility = View.GONE
-                                    cvError.visibility = View.GONE
                                 } else {
                                     rvMeals.visibility = View.VISIBLE
                                     progressBar.visibility = View.GONE
-                                    cvNotFound.visibility = View.GONE
-                                    cvError.visibility = View.GONE
                                     mealAdapter.submitList(meals.data)
                                 }
                             }
 
                             is Result.Error -> {
-                                cvError.visibility = View.VISIBLE
+                                tvMealsError.visibility = View.VISIBLE
                                 progressBar.visibility = View.GONE
-                                rvMeals.visibility = View.GONE
-                                cvNotFound.visibility = View.GONE
                             }
                         }
                     }

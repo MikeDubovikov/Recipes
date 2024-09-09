@@ -66,20 +66,18 @@ class HomeFragment : Fragment() {
                             is Result.Loading -> {
                                 progressBar.visibility = View.VISIBLE
                                 rvCategories.visibility = View.GONE
-                                cvErrorCategory.visibility = View.GONE
+                                tvCategoryError.visibility = View.GONE
                             }
 
                             is Result.Success -> {
                                 rvCategories.visibility = View.VISIBLE
                                 progressBar.visibility = View.GONE
-                                cvErrorCategory.visibility = View.GONE
                                 categoryAdapter.submitList(categories.data)
                             }
 
                             is Result.Error -> {
-                                cvErrorCategory.visibility = View.VISIBLE
+                                tvCategoryError.visibility = View.VISIBLE
                                 progressBar.visibility = View.GONE
-                                rvCategories.visibility = View.GONE
                             }
                         }
                     }

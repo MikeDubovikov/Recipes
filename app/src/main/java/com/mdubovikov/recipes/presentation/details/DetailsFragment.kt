@@ -53,13 +53,13 @@ class DetailsFragment : Fragment() {
                     with(binding) {
                         when (it) {
                             is Result.Loading -> {
+                                progressBar.visibility = View.VISIBLE
                                 cvDetails.visibility = View.VISIBLE
-                                cvErrorDetails.visibility = View.GONE
+                                cvDetailsError.visibility = View.GONE
                             }
 
                             is Result.Success -> {
-                                cvDetails.visibility = View.VISIBLE
-                                cvErrorDetails.visibility = View.GONE
+                                progressBar.visibility = View.GONE
 
                                 it.data.let { meal ->
                                     setupUI(meal)
@@ -70,8 +70,9 @@ class DetailsFragment : Fragment() {
                             }
 
                             is Result.Error -> {
+                                cvDetailsError.visibility = View.VISIBLE
+                                progressBar.visibility = View.GONE
                                 cvDetails.visibility = View.GONE
-                                cvErrorDetails.visibility = View.VISIBLE
                                 ivMealDetails.setImageResource(R.drawable.ic_error)
                             }
                         }

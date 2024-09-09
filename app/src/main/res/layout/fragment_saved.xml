@@ -17,7 +17,6 @@
         android:layout_gravity="center"
         android:text="@string/no_saved"
         android:textSize="20sp"
-        tools:ignore="TextContrastCheck"
         tools:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
