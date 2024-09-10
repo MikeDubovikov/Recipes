@@ -10,9 +10,9 @@ Recipes app makes on modern Android development with Hilt, Coroutines, Flow, Jet
 
 ### App preview
 
-![preview](https://github.com/MikeDubovikov/Recipes/assets/33451210/e43d499d-4597-4312-a309-4e7446e09bc7)
+![Preview Screenshots](https://github.com/user-attachments/assets/1f005075-cb1a-44a7-bc5e-a272a4cecb62)
 
-https://github.com/MikeDubovikov/Recipes/assets/33451210/a31e5d09-c32f-4c06-93e2-0cc33245cb42
+https://github.com/user-attachments/assets/3a056ee7-1cf0-41c4-9211-48dc00e9a961
 
 ## Tech stack
 
