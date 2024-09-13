@@ -1,15 +1,5 @@
 package com.mdubovikov.recipes.data.remote.service
 
-import com.mdubovikov.recipes.common.Constants.Endpoints.CATEGORIES
-import com.mdubovikov.recipes.common.Constants.Endpoints.MEALS
-import com.mdubovikov.recipes.common.Constants.Endpoints.MEAL_DETAILS
-import com.mdubovikov.recipes.common.Constants.Endpoints.SEARCH_MEALS
-import com.mdubovikov.recipes.common.Constants.Queries.MEALS_QUERY
-import com.mdubovikov.recipes.common.Constants.Queries.MEAL_DETAILS_QUERY
-import com.mdubovikov.recipes.common.Constants.Queries.SEARCH_BY_AREA_QUERY
-import com.mdubovikov.recipes.common.Constants.Queries.SEARCH_BY_FIRST_LETTER_QUERY
-import com.mdubovikov.recipes.common.Constants.Queries.SEARCH_BY_INGREDIENT_QUERY
-import com.mdubovikov.recipes.common.Constants.Queries.SEARCH_BY_NAME_QUERY
 import com.mdubovikov.recipes.data.remote.dto.CategoryResponse
 import com.mdubovikov.recipes.data.remote.dto.MealDetailsResponse
 import com.mdubovikov.recipes.data.remote.dto.MealResponse
@@ -38,4 +28,18 @@ interface MealService {
 
     @GET(CATEGORIES)
     suspend fun getCategories(): CategoryResponse
+
+    private companion object {
+        const val CATEGORIES = "categories.php"
+        const val MEAL_DETAILS = "lookup.php"
+        const val SEARCH_MEALS = "search.php"
+        const val MEALS = "filter.php"
+
+        const val MEALS_QUERY = "c"
+        const val MEAL_DETAILS_QUERY = "i"
+        const val SEARCH_BY_NAME_QUERY = "s"
+        const val SEARCH_BY_FIRST_LETTER_QUERY = "f"
+        const val SEARCH_BY_INGREDIENT_QUERY = "i"
+        const val SEARCH_BY_AREA_QUERY = "a"
+    }
 }

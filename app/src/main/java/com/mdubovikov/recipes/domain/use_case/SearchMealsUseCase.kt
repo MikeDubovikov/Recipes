@@ -1,9 +1,9 @@
 package com.mdubovikov.recipes.domain.use_case
 
-import com.mdubovikov.recipes.common.Constants.Queries.SEARCH_BY_AREA
-import com.mdubovikov.recipes.common.Constants.Queries.SEARCH_BY_FIRST_LETTER
-import com.mdubovikov.recipes.common.Constants.Queries.SEARCH_BY_INGREDIENT
-import com.mdubovikov.recipes.common.Constants.Queries.SEARCH_BY_NAME
+import com.mdubovikov.recipes.common.QueryKeys.SEARCH_BY_AREA
+import com.mdubovikov.recipes.common.QueryKeys.SEARCH_BY_FIRST_LETTER
+import com.mdubovikov.recipes.common.QueryKeys.SEARCH_BY_INGREDIENT
+import com.mdubovikov.recipes.common.QueryKeys.SEARCH_BY_NAME
 import com.mdubovikov.recipes.common.Result
 import com.mdubovikov.recipes.domain.model.MealModel
 import com.mdubovikov.recipes.domain.repository.MealRepository

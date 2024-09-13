@@ -1,6 +1,5 @@
 package com.mdubovikov.recipes.di
 
-import com.mdubovikov.recipes.common.Constants
 import com.mdubovikov.recipes.data.remote.service.MealService
 import dagger.Module
 import dagger.Provides
@@ -12,6 +11,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+
+private const val BASE_URL = "https://www.themealdb.com/api/json/v1/1/"
 
 @[Module InstallIn(SingletonComponent::class)]
 object NetworkModule {
@@ -35,7 +36,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideBaseUrl(): String = Constants.BASE_URL
+    fun provideBaseUrl(): String = BASE_URL
 
     @Provides
     @Singleton

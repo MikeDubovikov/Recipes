@@ -14,11 +14,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.mdubovikov.recipes.R
-import com.mdubovikov.recipes.common.Constants.Queries.CATEGORY
-import com.mdubovikov.recipes.common.Constants.Queries.SEARCH_BY_AREA
-import com.mdubovikov.recipes.common.Constants.Queries.SEARCH_BY_FIRST_LETTER
-import com.mdubovikov.recipes.common.Constants.Queries.SEARCH_BY_INGREDIENT
-import com.mdubovikov.recipes.common.Constants.Queries.SEARCH_BY_NAME
+import com.mdubovikov.recipes.common.QueryKeys.CATEGORY
+import com.mdubovikov.recipes.common.QueryKeys.SEARCH_BY_AREA
+import com.mdubovikov.recipes.common.QueryKeys.SEARCH_BY_FIRST_LETTER
+import com.mdubovikov.recipes.common.QueryKeys.SEARCH_BY_INGREDIENT
+import com.mdubovikov.recipes.common.QueryKeys.SEARCH_BY_NAME
 import com.mdubovikov.recipes.common.Result
 import com.mdubovikov.recipes.databinding.FragmentHomeBinding
 import com.mdubovikov.recipes.domain.model.CategoryModel
