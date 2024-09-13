@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_package = "com.mdubovikov.recipes";
+option java_multiple_files = true;
+
+message AppSettings {
+    Theme theme = 1;
+    Language language = 2;
+}
+
+enum Theme {
+    BY_DEFAULT_THEME = 0;
+    LIGHT_THEME = 1;
+    DARK_THEME = 2;
+}
+
+enum Language {
+    BY_DEFAULT_LANGUAGE = 0;
+    ENGLISH_LANGUAGE = 1;
+    RUSSIAN_LANGUAGE = 2;
+}

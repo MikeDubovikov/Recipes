@@ -2,27 +2,37 @@ package com.mdubovikov.recipes.di
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import com.mdubovikov.recipes.common.Constants
+import androidx.datastore.core.DataStoreFactory
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
+import androidx.datastore.dataStoreFile
+import com.mdubovikov.recipes.AppSettings
+import com.mdubovikov.recipes.data.proto_datastore.UserPreferencesSerializer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import javax.inject.Singleton
 
-private val Context.dataStore by preferencesDataStore(Constants.DATA_STORE_NAME)
+private const val DATA_STORE_FILE_NAME = "settings"
 
-@Module
 @InstallIn(SingletonComponent::class)
+@Module
 object DataStoreModule {
 
-    @Provides
     @Singleton
-    fun provideUserDataStorePreferences(
-        @ApplicationContext applicationContext: Context
-    ): DataStore<Preferences> {
-        return applicationContext.dataStore
+    @Provides
+    fun provideProtoDataStore(@ApplicationContext context: Context): DataStore<AppSettings> {
+        return DataStoreFactory.create(
+            serializer = UserPreferencesSerializer,
+            produceFile = { context.dataStoreFile(DATA_STORE_FILE_NAME) },
+            corruptionHandler = ReplaceFileCorruptionHandler(
+                produceNewData = { AppSettings.getDefaultInstance() }
+            ),
+            scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+        )
     }
 }

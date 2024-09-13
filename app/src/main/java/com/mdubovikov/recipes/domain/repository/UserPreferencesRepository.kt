@@ -1,12 +1,23 @@
 package com.mdubovikov.recipes.domain.repository
 
+import com.mdubovikov.recipes.AppSettings
+import com.mdubovikov.recipes.Language
+import com.mdubovikov.recipes.Theme
+import kotlinx.coroutines.flow.Flow
+
 interface UserPreferencesRepository {
 
-    suspend fun getTheme(): Int
+//    val theme: Flow<Theme?>
+//
+//    suspend fun setTheme(theme: Theme?)
+//
+//    val language: Flow<Language?>
+//
+//    suspend fun setLanguage(language: Language?)
 
-    suspend fun setTheme(theme: Int)
+    val settings: Flow<AppSettings>
 
-    suspend fun getLanguage(): Int
+    suspend fun setTheme(theme: Theme)
 
-    suspend fun setLanguage(language: Int)
+    suspend fun setLanguage(language: Language)
 }

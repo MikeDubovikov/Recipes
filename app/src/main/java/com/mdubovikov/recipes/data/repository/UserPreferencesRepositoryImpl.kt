@@ -1,39 +1,37 @@
 package com.mdubovikov.recipes.data.repository
 
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.core.IOException
+import com.mdubovikov.recipes.AppSettings
+import com.mdubovikov.recipes.Language
+import com.mdubovikov.recipes.Theme
 import com.mdubovikov.recipes.domain.repository.UserPreferencesRepository
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import javax.inject.Inject
 
 class UserPreferencesRepositoryImpl @Inject constructor(
-    private val userDataStorePreferences: DataStore<Preferences>
+    private val userDataStorePreferences: DataStore<AppSettings>
 ) : UserPreferencesRepository {
 
-    override suspend fun getTheme() =
-        userDataStorePreferences.data.first()[THEME] ?: DEFAULT_THEME
+    override val settings: Flow<AppSettings> = userDataStorePreferences.data
+        .catch { exception ->
+            if (exception is IOException) {
+                emit(AppSettings.getDefaultInstance())
+            } else {
+                throw exception
+            }
+        }
 
-    override suspend fun setTheme(theme: Int) {
-        userDataStorePreferences.edit { settings ->
-            settings[THEME] = theme
+    override suspend fun setTheme(theme: Theme) {
+        userDataStorePreferences.updateData { preferences ->
+            preferences.toBuilder().setTheme(theme).build()
         }
     }
 
-    override suspend fun getLanguage() =
-        userDataStorePreferences.data.first()[LANGUAGE] ?: DEFAULT_LANGUAGE
-
-    override suspend fun setLanguage(language: Int) {
-        userDataStorePreferences.edit { settings ->
-            settings[LANGUAGE] = language
+    override suspend fun setLanguage(language: Language) {
+        userDataStorePreferences.updateData { preferences ->
+            preferences.toBuilder().setLanguage(language).build()
         }
-    }
-
-    companion object {
-        private val THEME = intPreferencesKey("theme")
-        private val LANGUAGE = intPreferencesKey("language")
-        private const val DEFAULT_THEME = 2
-        private const val DEFAULT_LANGUAGE = 2
     }
 }

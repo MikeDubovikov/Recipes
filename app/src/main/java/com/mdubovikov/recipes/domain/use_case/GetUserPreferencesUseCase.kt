@@ -1,12 +1,12 @@
 package com.mdubovikov.recipes.domain.use_case
 
+import com.mdubovikov.recipes.AppSettings
 import com.mdubovikov.recipes.domain.repository.UserPreferencesRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetUserPreferencesUseCase @Inject constructor(
-    private val userPreferencesRepository: UserPreferencesRepository
+    userPreferencesRepository: UserPreferencesRepository
 ) {
-
-    suspend fun getTheme() = userPreferencesRepository.getTheme()
-    suspend fun getLanguage() = userPreferencesRepository.getLanguage()
+    val settings: Flow<AppSettings> = userPreferencesRepository.settings
 }
