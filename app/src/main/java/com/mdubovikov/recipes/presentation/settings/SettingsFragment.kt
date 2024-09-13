@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.mdubovikov.recipes.BuildConfig
+import com.mdubovikov.recipes.Language
 import com.mdubovikov.recipes.R
+import com.mdubovikov.recipes.Theme
 import com.mdubovikov.recipes.databinding.FragmentSettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -41,7 +43,7 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getDataStoreValues()
+        setSelectedPosition()
 
         with(binding) {
             changeTheme.setOnClickListener { selectTheme() }
@@ -50,10 +52,27 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun getDataStoreValues() {
+    private fun setSelectedPosition() {
         lifecycleScope.launch {
-            selectedTheme = viewModel.getTheme()
-            selectedLanguage = viewModel.getLanguage()
+            viewModel.theme.collect { theme ->
+                selectedTheme = when (theme) {
+                    Theme.LIGHT_THEME -> 0
+                    Theme.DARK_THEME -> 1
+                    Theme.BY_DEFAULT_THEME -> 2
+                    Theme.UNRECOGNIZED -> -1
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.language.collect { language ->
+                selectedLanguage = when (language) {
+                    Language.ENGLISH_LANGUAGE -> 0
+                    Language.RUSSIAN_LANGUAGE -> 1
+                    Language.BY_DEFAULT_LANGUAGE -> 2
+                    Language.UNRECOGNIZED -> -1
+                }
+            }
         }
     }
 
@@ -62,9 +81,14 @@ class SettingsFragment : Fragment() {
         val dialog = AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.choose_theme))
             .setSingleChoiceItems(themes, selectedTheme) { dialog, which ->
-                viewModel.setTheme(value = which)
+                when (which) {
+                    0 -> viewModel.setTheme(Theme.LIGHT_THEME)
+
+                    1 -> viewModel.setTheme(Theme.DARK_THEME)
+
+                    2 -> viewModel.setTheme(Theme.BY_DEFAULT_THEME)
+                }
                 dialog.dismiss()
-                activity?.recreate()
             }
             .create()
         dialog.show()
@@ -75,11 +99,21 @@ class SettingsFragment : Fragment() {
         val dialog = AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.choose_language))
             .setSingleChoiceItems(languages, selectedLanguage) { dialog, which ->
-                viewModel.setLanguage(value = which)
                 when (which) {
-                    0 -> AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
-                    1 -> AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ru"))
-                    2 -> AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList())
+                    0 -> {
+                        viewModel.setLanguage(Language.ENGLISH_LANGUAGE)
+                        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
+                    }
+
+                    1 -> {
+                        viewModel.setLanguage(Language.RUSSIAN_LANGUAGE)
+                        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ru"))
+                    }
+
+                    2 -> {
+                        viewModel.setLanguage(Language.BY_DEFAULT_LANGUAGE)
+                        AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList())
+                    }
                 }
                 dialog.dismiss()
             }

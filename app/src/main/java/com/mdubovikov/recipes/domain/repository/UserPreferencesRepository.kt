@@ -7,14 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserPreferencesRepository {
 
-//    val theme: Flow<Theme?>
-//
-//    suspend fun setTheme(theme: Theme?)
-//
-//    val language: Flow<Language?>
-//
-//    suspend fun setLanguage(language: Language?)
-
     val settings: Flow<AppSettings>
 
     suspend fun setTheme(theme: Theme)
